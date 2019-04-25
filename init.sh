@@ -1,12 +1,19 @@
 #!/bin/bash
-echo "Adding python3.7 repo"
-sudo add-apt-repository ppa:jonathonf/python-3.7
-echo "Updating apt-get"
-sudo apt-get update
-echo "Installing python3.7 and libpython3.7"
-sudo apt-get install python3.7
-sudo apt-get install libpython3.7
 
-echo "Updating python to use python3.7"
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
-
+echo "Installing pip"
+sudo apt-get install python3-pip
+echo "Installing virtualenv and creating new venv"
+sudo pip3 install virtualenv
+virtualenv venv
+echo "Cloning BHI"
+cd venv/bin/
+git clone https://github.com/jproids/BHI
+echo "Installing python3.7 from source"
+wget https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tar.xz
+unxz Python-3.7.1.tar.xz
+tar xvf Python-3.7.1.tar
+cd Python-3.7.1/
+./configure --prefix=/home/ubuntu/venv/bin/python3.7
+make
+sudo apt-get install zlib1g-dev
+sudo apt-get install libffi-dev
